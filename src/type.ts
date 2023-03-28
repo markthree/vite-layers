@@ -9,4 +9,7 @@ export interface Config extends UserConfig {
 
 export type ConfigFn = (env: ConfigEnv) => MayBePromise<UserConfig>;
 
-export type ConfigExport = MayBePromise<Config> | ConfigFn;
+export type Options = {
+  extends?: Extends;
+  vite?: MayBePromise<Config> | ConfigFn;
+};

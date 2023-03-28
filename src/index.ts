@@ -1,37 +1,45 @@
 import { defu } from "defu";
-import { env } from "process";
 import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
-import { loadLayer, normalizeLayerExtends } from "./load";
 import type { ConfigEnv, UserConfigExport } from "vite";
-import type { Config, ConfigExport, ConfigFn } from "./type";
+import type { Config, ConfigFn, Options } from "./type";
+import {
+  detectCommand,
+  detectMode,
+  loadLayer,
+  normalizeLayerExtends,
+} from "./load";
 
-export async function Layers(config: ConfigExport): Promise<UserConfigExport> {
-  if (isFunction(config)) {
+export async function Layers(options: Options = {}): Promise<UserConfigExport> {
+  const { vite = {}, extends: layerExtends = [] } = options;
+
+  const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
+
+  if (isFunction(vite)) {
     const configFn: ConfigFn = async function (env: ConfigEnv) {
-      const userConfig = await config(env) as Config;
-      const layerExtends = normalizeLayerExtends(userConfig.extends);
-      const extendedConfigs = await loadLayer(layerExtends, env);
-      treeLog(layerExtends);
-      return defu(userConfig, ...extendedConfigs);
+      const config = await vite(env) as Config;
+      const extendedConfigs = await loadLayer(normalizedLayerExtends, env);
+      treeLog(normalizedLayerExtends);
+      return defu(config, ...extendedConfigs);
     };
 
     return configFn;
   }
 
-  const userConfig = await config;
-
-  const layerExtends = normalizeLayerExtends(userConfig.extends);
+  const config = await vite;
 
   const extendedConfigs = await loadLayer(
-    layerExtends,
+    normalizedLayerExtends,
     {
-      mode: env.NODE_ENV || "development",
-      command: process.argv.includes("build") ? "build" : "serve",
+      mode: detectMode(),
+      command: detectCommand(),
+      ssrBuild: !!config.build?.ssr,
     },
   );
 
-  treeLog(layerExtends);
+  console.log(detectMode());
 
-  return defu(userConfig, ...extendedConfigs);
+  treeLog(normalizedLayerExtends);
+
+  return defu(config, ...extendedConfigs);
 }

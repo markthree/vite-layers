@@ -1,5 +1,6 @@
 import jiti from "jiti";
 import { Extends } from "./type";
+import { argv, env } from "process";
 import { detectConfigFile } from "./fs";
 import type { ConfigEnv, UserConfigExport } from "vite";
 import { isArray, isFunction, isString } from "m-type-tools";
@@ -45,4 +46,16 @@ export function loadLayer(
       return l;
     }),
   );
+}
+
+export function detectMode() {
+  const hasModeIndex = argv.findIndex((a) => a === "--mode" || a === "-m");
+  if (hasModeIndex !== -1) {
+    return argv[hasModeIndex + 1];
+  }
+  return env.NODE_ENV || "development";
+}
+
+export function detectCommand() {
+  return argv.includes("build") ? "build" : "serve";
 }
