@@ -46,10 +46,11 @@
     "unbuild": "^1.1.2",
     "vite": "^4.2.0"
   },
+  "peerDependencies": {
+    "vite": ">=3.0.0"
+  },
   "dependencies": {
-    "@types/fs-extra": "^11.0.1",
     "defu": "^6.1.2",
-    "fs-extra": "^11.1.1",
     "jiti": "^1.18.2",
     "m-type-tools": "^0.4.0"
   }
