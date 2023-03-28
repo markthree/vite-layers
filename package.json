@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "unbuild",
-    "dev": "pnpm build:stub",
+    "dev": "unbuild --stub",
     "prepublishOnly": "pnpm build",
     "release": "bumpp --commit --push --tag && npm publish"
   },
@@ -43,6 +43,14 @@
     "@types/node": "^18.15.10",
     "bumpp": "^9.0.0",
     "typescript": "^5.0.2",
-    "unbuild": "^1.1.2"
+    "unbuild": "^1.1.2",
+    "vite": "^4.2.0"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "defu": "^6.1.2",
+    "fs-extra": "^11.1.1",
+    "jiti": "^1.18.2",
+    "m-type-tools": "^0.4.0"
   }
 }
