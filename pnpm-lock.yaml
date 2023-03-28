@@ -9,6 +9,7 @@ importers:
       consola: ^2.15.3
       defu: ^6.1.2
       jiti: ^1.18.2
+      kolorist: ^1.7.0
       m-type-tools: ^0.4.0
       typescript: ^5.0.2
       unbuild: ^1.1.2
@@ -17,6 +18,7 @@ importers:
       consola: 2.15.3
       defu: 6.1.2
       jiti: 1.18.2
+      kolorist: 1.7.0
       m-type-tools: 0.4.0
     devDependencies:
       '@types/node': 18.15.10
@@ -1160,6 +1162,10 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
     dev: true
+
+  /kolorist/1.7.0:
+    resolution: {integrity: sha512-ymToLHqL02udwVdbkowNpzjFd6UzozMtshPQKVi5k1EjKRqKqBrOnE9QbLEb0/pV76SAiIT13hdL8R6suc+f3g==}
+    dev: false
 
   /lru-cache/5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}

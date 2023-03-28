@@ -1,37 +1,37 @@
 import { defu } from "defu";
-import consola from "consola";
-import type { UserConfig } from "vite";
-import { detectConfigFile, load } from "./core";
-import { isArray, isObject } from "m-type-tools";
-import { isString, MayBeArray } from "m-type-tools";
+import { env } from "process";
+import { treeLog } from "./log";
+import { isFunction } from "m-type-tools";
+import { loadLayer, normalizeLayerExtends } from "./load";
+import type { ConfigEnv, UserConfigExport } from "vite";
+import type { Config, ConfigExport, ConfigFn } from "./type";
 
-const log = consola.withScope("vite-layers");
+export async function Layers(config: ConfigExport): Promise<UserConfigExport> {
+  if (isFunction(config)) {
+    const configFn: ConfigFn = async function (env: ConfigEnv) {
+      const userConfig = await config(env) as Config;
+      const layerExtends = normalizeLayerExtends(userConfig.extends);
+      const extendedConfigs = await loadLayer(layerExtends, env);
+      treeLog(layerExtends);
+      return defu(userConfig, ...extendedConfigs);
+    };
 
-interface Options {
-  extends: MayBeArray<string | UserConfig>;
-}
-
-export function Layers(options: Options & UserConfig): UserConfig {
-  let { extends: layerExtends, ...userConfig } = options;
-  if (!isArray(layerExtends)) {
-    layerExtends = [layerExtends];
+    return configFn;
   }
 
-  return defu(
-    userConfig,
-    ...layerExtends.map((l, i) => {
-      if (isObject(l)) {
-        return l;
-      }
-      if (isString(l)) {
-        const configFile = detectConfigFile(l);
-        if (configFile) {
-          return load(configFile);
-        }
-      }
+  const userConfig = await config;
 
-      log.warn(`The extension type is not supported: ${isString(l) ? l : i}`);
-      return {};
-    }),
+  const layerExtends = normalizeLayerExtends(userConfig.extends);
+
+  const extendedConfigs = await loadLayer(
+    layerExtends,
+    {
+      mode: env.NODE_ENV || "development",
+      command: process.argv.includes("build") ? "build" : "serve",
+    },
   );
+
+  treeLog(layerExtends);
+
+  return defu(userConfig, ...extendedConfigs);
 }
