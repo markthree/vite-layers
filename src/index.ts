@@ -1,8 +1,8 @@
 import { defu } from "defu";
 import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
-import type { ConfigEnv, UserConfigExport } from "vite";
-import type { Config, ConfigFn, Options } from "./type";
+import type { ConfigFn, Options } from "./type";
+import type { ConfigEnv, UserConfig, UserConfigExport } from "vite";
 import {
   detectCommand,
   detectMode,
@@ -11,16 +11,20 @@ import {
 } from "./load";
 
 export async function Layers(options: Options = {}): Promise<UserConfigExport> {
-  const { vite = {}, extends: layerExtends = [] } = options;
+  const { vite = {}, extends: layerExtends = [], normalize } = options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
 
   if (isFunction(vite)) {
     const configFn: ConfigFn = async function (env: ConfigEnv) {
-      const config = await vite(env) as Config;
+      const config = await vite(env) as UserConfig;
       const extendedConfigs = await loadLayer(normalizedLayerExtends, env);
       treeLog(normalizedLayerExtends);
-      return defu(config, ...extendedConfigs);
+      const userConfig = defu(config, ...extendedConfigs);
+      if (isFunction(normalize)) {
+        return normalize(userConfig);
+      }
+      return userConfig;
     };
 
     return configFn;
@@ -37,9 +41,11 @@ export async function Layers(options: Options = {}): Promise<UserConfigExport> {
     },
   );
 
-  console.log(detectMode());
-
   treeLog(normalizedLayerExtends);
 
-  return defu(config, ...extendedConfigs);
+  const userConfig = defu(config, ...extendedConfigs);
+  if (isFunction(normalize)) {
+    return normalize(userConfig);
+  }
+  return userConfig;
 }
