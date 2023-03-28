@@ -33,6 +33,12 @@ npm i vite-layers -D
 import { Layers } from "vite-layers";
 
 export default Layers({
+  // Your own vite configuration now
+  vite: {
+    server: {
+      port: 3000,
+    },
+  },
   extends: "../vite-vue", // The target directory you want to inherit
 });
 ```
