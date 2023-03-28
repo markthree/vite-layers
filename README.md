@@ -37,6 +37,33 @@ export default Layers({
 });
 ```
 
+#### Manual Import
+
+```ts
+import Config from "../vite-vue/vite.config.ts"; // Manual Import Config
+// vite.config.ts
+import { Layers } from "vite-layers";
+
+export default Layers({
+  extends: Config, // The target directory you want to inherit
+});
+```
+
+#### multiple
+
+```ts
+import Config from "../vite-vue/vite.config.ts"; // Manual Import Config
+// vite.config.ts
+import { Layers } from "vite-layers";
+
+export default Layers({
+  extends: [
+    "../../vite-vue",
+    Config,
+  ], // Multiple target directories to inherit
+});
+```
+
 <br />
 
 ## inspiration

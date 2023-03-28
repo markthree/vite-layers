@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@types/node': ^18.15.10
       bumpp: ^9.0.0
+      consola: ^2.15.3
       defu: ^6.1.2
       jiti: ^1.18.2
       m-type-tools: ^0.4.0
@@ -13,6 +14,7 @@ importers:
       unbuild: ^1.1.2
       vite: ^4.2.0
     dependencies:
+      consola: 2.15.3
       defu: 6.1.2
       jiti: 1.18.2
       m-type-tools: 0.4.0
@@ -854,7 +856,6 @@ packages:
 
   /consola/2.15.3:
     resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
-    dev: true
 
   /convert-source-map/1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
