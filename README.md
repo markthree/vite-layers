@@ -12,9 +12,9 @@ I want to inherit the configuration of the vite project
 
 ## Features
 
-1. [-] inherit configuration file
-    [-] npm package
-    [x] relative position
+1. [ ] inherit configuration file
+   - [ ] npm package
+   - [x] relative position
 
 <br />
 
