@@ -2,12 +2,21 @@ import jiti from "jiti";
 import { log } from "./log";
 import { join } from "path";
 import { cwd } from "./path";
-import { isBuiltin } from "module";
 import { argv, env } from "process";
 import type { Extends } from "./type";
 import { createFindUp, detectConfigFile } from "./fs";
+import { builtinModules as _builtinModules } from "module";
 import type { ConfigEnv, UserConfigExport } from "vite";
 import { isArray, isFunction, isString } from "m-type-tools";
+
+const builtinModules = [
+  _builtinModules,
+  _builtinModules.filter((m) => !m.startsWith("_")).map((m) => `node:${m}`),
+].flat(1);
+
+function isBuiltin(name: string) {
+  return builtinModules.includes(name);
+}
 
 export function load(path: string) {
   // @ts-ignore
