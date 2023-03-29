@@ -106,7 +106,7 @@ export default Layers({
 
 If you are using TS and there is `tsconfig.node.json`, you need to add types
 
-```json
+```json5
 {
   "compilerOptions": {
     "types": ["vite"] // add vite
