@@ -43,7 +43,7 @@ export default Layers({
 });
 ```
 
-#### Manual Import
+#### manual import
 
 ```ts
 import Config from "../vite-vue/vite.config.ts"; // Manual Import Config
@@ -58,8 +58,8 @@ export default Layers({
 #### multiple
 
 ```ts
-import Config from "../vite-vue/vite.config.ts"; // Manual Import Config
 // vite.config.ts
+import Config from "../vite-vue/vite.config.ts"; // Manual Import Config
 import { Layers } from "vite-layers";
 
 export default Layers({
@@ -67,6 +67,23 @@ export default Layers({
     "../../vite-vue",
     Config,
   ], // Multiple target directories to inherit
+});
+```
+
+#### normalize
+
+```ts
+// vite.config.ts
+import { Layers } from "vite-layers";
+
+export default Layers({
+  normalize(config) {
+    // Allows you to modify the final configuration
+    return config;
+  },
+  extends: [
+    "../../vite-vue",
+  ],
 });
 ```
 
