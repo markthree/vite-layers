@@ -102,6 +102,21 @@ export default Layers({
 
 <br />
 
+### ts
+
+If you are using TS and there is `tsconfig.node.json`, you need to add types
+
+```json
+{
+  "compilerOptions": {
+    "types": ["vite"] // add vite
+    // ...other content
+  }
+}
+```
+
+<br />
+
 ## inspiration
 
 Inspired by [nuxt/layers](https://nuxt.com/docs/getting-started/layers)
