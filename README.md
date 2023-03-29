@@ -12,8 +12,8 @@ I want to inherit the configuration of the vite project
 
 ## Features
 
-1. [ ] inherit configuration file
-   - [ ] npm package
+1. [x] inherit configuration file
+   - [x] npm package
    - [x] relative position
 
 <br />
@@ -83,6 +83,19 @@ export default Layers({
   },
   extends: [
     "../../vite-vue",
+  ],
+});
+```
+
+#### npm package
+
+```ts
+// vite.config.ts
+import { Layers } from "vite-layers";
+
+export default Layers({
+  extends: [
+    "package", // your package
   ],
 });
 ```

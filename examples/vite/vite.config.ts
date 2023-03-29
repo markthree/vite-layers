@@ -1,4 +1,3 @@
-import { defineConfig } from "vite";
 import { Layers } from "vite-layers";
 
 export default Layers({
@@ -11,5 +10,8 @@ export default Layers({
     console.log(userConfig);
     return userConfig;
   },
-  extends: "../vite-vue",
+  extends: [
+    "presets",
+    "../vite-vue",
+  ],
 });

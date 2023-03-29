@@ -1,9 +1,15 @@
 import jiti from "jiti";
+import { log } from "./log";
 import { Extends } from "./type";
+import { isBuiltin } from "module";
 import { argv, env } from "process";
-import { detectConfigFile } from "./fs";
+import { cwd as _cwd } from "process";
+import { createFindUp, detectConfigFile } from "./fs";
 import type { ConfigEnv, UserConfigExport } from "vite";
 import { isArray, isFunction, isString } from "m-type-tools";
+import { join } from "path";
+
+const cwd = _cwd();
 
 export function load(path: string) {
   // @ts-ignore
@@ -29,13 +35,30 @@ export function loadLayer(
   return Promise.all(
     layerExtends.map(async (l) => {
       if (isString(l)) {
-        const configFile = detectConfigFile(l);
+        if (isBuiltin(l)) {
+          return {};
+        }
+
+        const isDep = !l.startsWith(".");
+        if (isDep) {
+          const hasNodeModulesPrefix = l.startsWith("node_modules");
+          const nr = hasNodeModulesPrefix ? l : join("node_modules", l);
+          const findDep = createFindUp(nr);
+          const nl = await findDep(cwd);
+          if (nl) {
+            l = nl;
+          }
+        }
+
+        const configFile = await detectConfigFile(l);
         if (configFile) {
           const result = await load(configFile);
           if (isFunction(result)) {
             return result(env);
           }
           return result;
+        } else {
+          log.error(`layer hiatus(${isDep ? "Dep" : "Relative"}): ${l}`);
         }
       }
 
