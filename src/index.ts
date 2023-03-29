@@ -2,7 +2,7 @@ import { defu } from "defu";
 import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
 import type { ConfigFn, Options } from "./type";
-import type { ConfigEnv, UserConfig, UserConfigExport } from "vite";
+import type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
 import {
   detectCommand,
   detectMode,
@@ -10,7 +10,9 @@ import {
   normalizeLayerExtends,
 } from "./load";
 
-export async function Layers(options: Options = {}): Promise<UserConfigExport> {
+export async function Layers(
+  options: Options = {},
+): Promise<UserConfig | UserConfigFn> {
   const { vite = {}, extends: layerExtends = [], normalize } = options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
