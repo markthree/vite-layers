@@ -1,12 +1,13 @@
 # vite-layers
 
-layers support for vite
+layers support for vite，quickly inherit your vite configuration
 
 <br />
 
 ## Motivation
 
-I want to inherit the configuration of the vite project
+I want to inherit the configuration of the vite project in workspace and npm
+package
 
 <br />
 
