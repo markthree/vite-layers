@@ -1,15 +1,13 @@
 import jiti from "jiti";
 import { log } from "./log";
-import { Extends } from "./type";
+import { join } from "path";
+import { cwd } from "./path";
 import { isBuiltin } from "module";
 import { argv, env } from "process";
-import { cwd as _cwd } from "process";
+import type { Extends } from "./type";
 import { createFindUp, detectConfigFile } from "./fs";
 import type { ConfigEnv, UserConfigExport } from "vite";
 import { isArray, isFunction, isString } from "m-type-tools";
-import { join } from "path";
-
-const cwd = _cwd();
 
 export function load(path: string) {
   // @ts-ignore

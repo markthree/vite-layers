@@ -1,5 +1,7 @@
+import { cwd } from "./path";
 import consola from "consola";
-import { gray } from "kolorist";
+import { resolve } from "path";
+import { gray, magenta, yellow } from "kolorist";
 import { isString } from "m-type-tools";
 import type { UserConfigExport } from "vite";
 
@@ -20,7 +22,9 @@ export function treeLog(layerExtends: Array<string | UserConfigExport>) {
     listLog(
       layerExtends.map((l) => {
         if (isString(l)) {
-          return l;
+          return l.startsWith(".")
+            ? `${l} - ${magenta(resolve(cwd, l))}`
+            : `${l} - ${yellow("dep")}`;
         }
         return `Manual Import`;
       }),
