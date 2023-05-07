@@ -11,7 +11,19 @@ export const DEFAULT_CONFIG_FILES = [
   "vite.config.cts",
 ];
 
+async function isFile(path: string) {
+  try {
+    const stat = await lstat(path)
+    return stat.isFile()
+  } catch (error) {
+    return false
+  }
+}
+
 export async function detectConfigFile(base: string) {
+  if (await isFile(base)) {
+    return base
+  }
   for (const filename of DEFAULT_CONFIG_FILES) {
     const filePath = join(base, filename);
     if (await exist(filePath)) {

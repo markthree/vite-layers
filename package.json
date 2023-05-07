@@ -40,20 +40,20 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "bumpp": "^9.0.0",
-    "typescript": "^5.0.2",
-    "unbuild": "^1.1.2",
-    "vite": "^4.2.1"
+    "@types/node": "^18.16.5",
+    "bumpp": "^9.1.0",
+    "typescript": "^5.0.4",
+    "unbuild": "^1.2.1",
+    "vite": "^4.3.5"
   },
   "peerDependencies": {
     "vite": ">=3.0.0"
   },
   "dependencies": {
-    "consola": "^2.15.3",
+    "consola": "^3.1.0",
     "defu": "^6.1.2",
     "jiti": "^1.18.2",
-    "kolorist": "^1.7.0",
-    "m-type-tools": "^0.4.0"
+    "kolorist": "^1.8.0",
+    "m-type-tools": "^0.4.1"
   }
 }
