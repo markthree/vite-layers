@@ -61,3 +61,4 @@ export * from "./load";
 export * from "./log";
 export * from "./path";
 export * from "./type";
+export type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
