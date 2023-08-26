@@ -10,6 +10,14 @@ import {
   normalizeLayerExtends,
 } from "./load";
 
+export function detectEnv(config: UserConfig) {
+  return {
+    mode: detectMode(),
+    command: detectCommand(),
+    ssrBuild: !!config.build?.ssr,
+  } as const;
+}
+
 export async function Layers(
   options: Options = {},
 ): Promise<UserConfig | UserConfigFn> {
@@ -36,11 +44,7 @@ export async function Layers(
 
   const extendedConfigs = await loadLayer(
     normalizedLayerExtends,
-    {
-      mode: detectMode(),
-      command: detectCommand(),
-      ssrBuild: !!config.build?.ssr,
-    },
+    detectEnv(config),
   );
 
   treeLog(normalizedLayerExtends);
