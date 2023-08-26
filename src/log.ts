@@ -1,11 +1,11 @@
 import { cwd } from "./path";
-import consola from "consola";
+import { createConsola } from "consola";
 import { resolve } from "path";
 import { gray, magenta, yellow } from "kolorist";
 import { isString } from "m-type-tools";
 import type { UserConfigExport } from "vite";
 
-export const log = consola.withScope("vite-layers");
+export const log = createConsola().withTag("vite-layers");
 
 export function listLog(list: string[], color = gray) {
   return list.reduce((s, v, i) => {
