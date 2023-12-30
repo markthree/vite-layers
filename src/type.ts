@@ -10,5 +10,6 @@ export type Options = {
   normalize?: (
     userConfig: UserConfig,
   ) => MayBePromise<UserConfig>;
+  logger?: boolean;
   vite?: MayBePromise<UserConfig> | ConfigFn;
 };

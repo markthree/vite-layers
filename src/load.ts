@@ -35,9 +35,14 @@ export function normalizeLayerExtends(layerExtends?: Extends) {
   return [];
 }
 
+interface Options {
+  logger?: boolean;
+}
+
 export function loadLayer(
   layerExtends: Array<string | UserConfigExport>,
   env: ConfigEnv,
+  options: Options = { logger: true },
 ): Promise<UserConfigExport[]> {
   return Promise.all(
     layerExtends.map(async (l) => {
@@ -65,7 +70,9 @@ export function loadLayer(
           }
           return result;
         } else {
-          log.error(`layer hiatus(${isDep ? "Dep" : "Relative"}): ${l}`);
+          if (options.logger) {
+            log.error(`layer hiatus(${isDep ? "Dep" : "Relative"}): ${l}`);
+          }
         }
       }
 

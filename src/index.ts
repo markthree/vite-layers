@@ -21,15 +21,20 @@ export function detectEnv(config: UserConfig) {
 export async function Layers(
   options: Options = {},
 ): Promise<UserConfig | UserConfigFn> {
-  const { vite = {}, extends: layerExtends = [], normalize } = options;
+  const { vite = {}, extends: layerExtends = [], normalize, logger = true } =
+    options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
 
   if (isFunction(vite)) {
     const configFn: ConfigFn = async function (env: ConfigEnv) {
       const config = await vite(env) as UserConfig;
-      const extendedConfigs = await loadLayer(normalizedLayerExtends, env);
-      treeLog(normalizedLayerExtends);
+      const extendedConfigs = await loadLayer(normalizedLayerExtends, env, {
+        logger,
+      });
+      if (logger) {
+        treeLog(normalizedLayerExtends);
+      }
       const userConfig = defu(config, ...extendedConfigs);
       if (isFunction(normalize)) {
         return normalize(userConfig);
@@ -45,9 +50,12 @@ export async function Layers(
   const extendedConfigs = await loadLayer(
     normalizedLayerExtends,
     detectEnv(config),
+    { logger },
   );
 
-  treeLog(normalizedLayerExtends);
+  if (logger) {
+    treeLog(normalizedLayerExtends);
+  }
 
   const userConfig = defu(config, ...extendedConfigs);
   if (isFunction(normalize)) {
