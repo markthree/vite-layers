@@ -17,17 +17,20 @@ export function listLog(list: string[], color = gray) {
 }
 
 export function treeLog(layerExtends: Array<string | UserConfigExport>) {
-  log.success(`layer - ${layerExtends.length}`);
-  log.log(
-    listLog(
-      layerExtends.map((l) => {
-        if (isString(l)) {
-          return l.startsWith(".")
-            ? `${l} - ${magenta(slash(resolve(cwd, l)))}`
-            : `${l} - ${yellow("dep")}`;
-        }
-        return `Manual Import`;
-      }),
-    ),
-  );
+  const hasLayerExtends = Boolean(layerExtends.length);
+  log.success(`layer - ${hasLayerExtends ? layerExtends.length : "empty"}`);
+  if (hasLayerExtends) {
+    log.log(
+      listLog(
+        layerExtends.map((l) => {
+          if (isString(l)) {
+            return l.startsWith(".")
+              ? `${l} - ${magenta(slash(resolve(cwd, l)))}`
+              : `${l} - ${yellow("dep")}`;
+          }
+          return `Manual Import`;
+        }),
+      ),
+    );
+  }
 }
