@@ -1,7 +1,5 @@
 import { defu } from "defu";
-import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
-import type { ConfigFn, Options } from "./type";
 import type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
 import {
   detectCommand,
@@ -9,7 +7,9 @@ import {
   loadLayer,
   normalizeLayerExtends,
 } from "./load";
+import { treeLog } from "./log";
 import { WatchLayer } from "./plugin";
+import type { ConfigFn, Options } from "./type";
 
 export function detectEnv(config: UserConfig) {
   return {
@@ -74,10 +74,10 @@ export async function Layers(
   }
 }
 
+export type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
 export * from "./fs";
 export * from "./load";
 export * from "./log";
 export * from "./path";
-export * from "./type";
 export * from "./plugin";
-export type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
+export * from "./type";

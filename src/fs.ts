@@ -1,6 +1,6 @@
-import { slash } from "./path";
-import { dirname, join } from "path";
 import { lstat } from "fs/promises";
+import { dirname, join } from "path";
+import { slash } from "./path";
 
 export const DEFAULT_CONFIG_FILES = [
   "vite.config.js",
@@ -13,16 +13,16 @@ export const DEFAULT_CONFIG_FILES = [
 
 async function isFile(path: string) {
   try {
-    const stat = await lstat(path)
-    return stat.isFile()
+    const stat = await lstat(path);
+    return stat.isFile();
   } catch (error) {
-    return false
+    return false;
   }
 }
 
 export async function detectConfigFile(base: string) {
   if (await isFile(base)) {
-    return base
+    return base;
   }
   for (const filename of DEFAULT_CONFIG_FILES) {
     const filePath = join(base, filename);

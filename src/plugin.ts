@@ -1,9 +1,7 @@
+import { realpath } from "fs/promises";
+import { isString } from "m-type-tools";
 import type { Plugin, UserConfigExport } from "vite";
 import { findLayerConfigFile } from "./load";
-import { isString } from "m-type-tools";
-import { slash } from "./path";
-import { resolve } from "path";
-import { realpath } from "fs/promises";
 
 /**
  * vite plugin for restarting when changing configuration files

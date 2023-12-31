@@ -1,9 +1,9 @@
-import { cwd, slash } from "./path";
 import { createConsola } from "consola";
-import { resolve } from "path";
 import { gray, magenta, yellow } from "kolorist";
 import { isString } from "m-type-tools";
+import { resolve } from "path";
 import type { UserConfigExport } from "vite";
+import { cwd, slash } from "./path";
 
 export const log = createConsola().withTag("vite-layers");
 
