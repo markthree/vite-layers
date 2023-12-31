@@ -2,12 +2,7 @@ import { defu } from "defu";
 import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
 import type { ConfigFn, Options } from "./type";
-import type {
-  ConfigEnv,
-  UserConfig,
-  UserConfigExport,
-  UserConfigFn,
-} from "vite";
+import type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
 import {
   detectCommand,
   detectMode,
