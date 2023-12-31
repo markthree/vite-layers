@@ -21,8 +21,8 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       m-type-tools:
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.1
+        version: 0.5.1
     devDependencies:
       '@types/node':
         specifier: ^18.19.4
@@ -1651,7 +1651,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /chownr@2.0.0:
@@ -1961,14 +1961,6 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -2197,8 +2189,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /m-type-tools@0.4.1:
-    resolution: {integrity: sha512-3QarLN7adHAnqM/BnNp9nMn7Zm+1DBtKeQEGcYcM1tkYhJGxxxPOHKTehuB7F3USX7B0JNalx+xMFs9vgyOc1w==}
+  /m-type-tools@0.5.1:
+    resolution: {integrity: sha512-04WUOj5JFthdA/RgUJALYP5SM8H9IRyQNI2/VwN2dASzfqDgQhus+kUX357mPfSgPq7U6IGRaL1/P75vwp2USQ==}
     dev: false
 
   /magic-string@0.25.9:
@@ -2521,7 +2513,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /rollup@3.28.1:
@@ -2529,7 +2521,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /rollup@4.9.1:
@@ -2796,7 +2788,7 @@ packages:
       resolve: 1.22.1
       rollup: 3.20.2
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /vite@5.0.10(@types/node@18.19.4):

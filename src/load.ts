@@ -1,4 +1,4 @@
-import jiti from "jiti";
+import jiti, { type JITIOptions } from "jiti";
 import { log } from "./log";
 import { join } from "path";
 import { cwd } from "./path";
@@ -18,9 +18,20 @@ function isBuiltin(name: string) {
   return builtinModules.includes(name);
 }
 
-export function load(path: string) {
+export const defaultLoadOptions: JITIOptions = {
+  requireCache: false,
+};
+
+export function load(
+  path: string,
+  options: JITIOptions = defaultLoadOptions,
+) {
   // @ts-ignore
-  return jiti(null, { interopDefault: true, esmResolve: true })(
+  return jiti(null, {
+    interopDefault: true,
+    esmResolve: true,
+    ...options,
+  })(
     path,
   );
 }
