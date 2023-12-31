@@ -2,7 +2,12 @@ import { defu } from "defu";
 import { treeLog } from "./log";
 import { isFunction } from "m-type-tools";
 import type { ConfigFn, Options } from "./type";
-import type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
+import type {
+  ConfigEnv,
+  UserConfig,
+  UserConfigExport,
+  UserConfigFn,
+} from "vite";
 import {
   detectCommand,
   detectMode,
@@ -21,47 +26,48 @@ export function detectEnv(config: UserConfig) {
 export async function Layers(
   options: Options = {},
 ): Promise<UserConfig | UserConfigFn> {
-  const { vite = {}, extends: layerExtends = [], normalize, logger = true } =
-    options;
+  const {
+    vite = {},
+    extends: layerExtends = [],
+    normalize,
+    logger = true,
+  } = options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
-
   if (isFunction(vite)) {
     const configFn: ConfigFn = async function (env: ConfigEnv) {
-      const config = await vite(env) as UserConfig;
-      const extendedConfigs = await loadLayer(normalizedLayerExtends, env, {
-        logger,
-      });
-      if (logger) {
-        treeLog(normalizedLayerExtends);
-      }
-      const userConfig = defu(config, ...extendedConfigs);
-      if (isFunction(normalize)) {
-        return normalize(userConfig);
-      }
-      return userConfig;
+      const config: UserConfig = await vite(env);
+      return createUserConfig({ config, env });
     };
-
     return configFn;
   }
 
   const config = await vite;
 
-  const extendedConfigs = await loadLayer(
-    normalizedLayerExtends,
-    detectEnv(config),
-    { logger },
-  );
+  return createUserConfig({
+    config,
+    env: detectEnv(config),
+  });
 
-  if (logger) {
-    treeLog(normalizedLayerExtends);
+  async function createUserConfig(
+    options: {
+      env: ConfigEnv;
+      config: UserConfig;
+    },
+  ) {
+    const { env, config } = options;
+    const extendedConfigs = await loadLayer(normalizedLayerExtends, env, {
+      logger,
+    });
+    if (logger) {
+      treeLog(normalizedLayerExtends);
+    }
+    const userConfig = defu(config, ...extendedConfigs);
+    if (isFunction(normalize)) {
+      return normalize(userConfig);
+    }
+    return userConfig;
   }
-
-  const userConfig = defu(config, ...extendedConfigs);
-  if (isFunction(normalize)) {
-    return normalize(userConfig);
-  }
-  return userConfig;
 }
 
 export * from "./fs";
