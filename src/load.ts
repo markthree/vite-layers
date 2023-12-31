@@ -58,33 +58,18 @@ export function loadLayer(
   return Promise.all(
     layerExtends.map(async (l) => {
       if (isString(l)) {
-        if (isBuiltin(l)) {
-          return {};
-        }
-
-        const isDep = !l.startsWith(".");
-        if (isDep) {
-          const hasNodeModulesPrefix = l.startsWith("node_modules");
-          const nr = hasNodeModulesPrefix ? l : join("node_modules", l);
-          const findDep = createFindUp(nr);
-          const nl = await findDep(cwd);
-          if (nl) {
-            l = nl;
-          }
-        }
-
-        const configFile = await detectConfigFile(l);
+        const configFile = await findLayerConfigFile(l);
         if (configFile) {
           const result = await load(configFile);
           if (isFunction(result)) {
             return result(env);
           }
           return result;
-        } else {
-          if (options.logger) {
-            log.error(`layer hiatus(${isDep ? "Dep" : "Relative"}): ${l}`);
-          }
         }
+        if (options.logger) {
+          log.error(`layer hiatus → ${l}`);
+        }
+        return {};
       }
 
       if (isFunction(l)) {
@@ -106,4 +91,24 @@ export function detectMode() {
 
 export function detectCommand() {
   return argv.includes("build") ? "build" : "serve";
+}
+
+export async function findLayerConfigFile(layerExtendStr: string) {
+  if (isBuiltin(layerExtendStr)) {
+    return;
+  }
+  const isDep = !layerExtendStr.startsWith(".");
+  if (isDep) {
+    const hasNodeModulesPrefix = layerExtendStr.startsWith("node_modules");
+    const nr = hasNodeModulesPrefix
+      ? layerExtendStr
+      : join("node_modules", layerExtendStr);
+    const findDep = createFindUp(nr);
+    const nl = await findDep(cwd);
+    if (nl) {
+      layerExtendStr = nl;
+    }
+  }
+  const configFile = await detectConfigFile(layerExtendStr);
+  return configFile;
 }

@@ -1,4 +1,4 @@
-import { cwd } from "./path";
+import { cwd, slash } from "./path";
 import { createConsola } from "consola";
 import { resolve } from "path";
 import { gray, magenta, yellow } from "kolorist";
@@ -23,7 +23,7 @@ export function treeLog(layerExtends: Array<string | UserConfigExport>) {
       layerExtends.map((l) => {
         if (isString(l)) {
           return l.startsWith(".")
-            ? `${l} - ${magenta(resolve(cwd, l))}`
+            ? `${l} - ${magenta(slash(resolve(cwd, l)))}`
             : `${l} - ${yellow("dep")}`;
         }
         return `Manual Import`;

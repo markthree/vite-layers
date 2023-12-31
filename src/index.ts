@@ -29,6 +29,7 @@ export async function Layers(
   } = options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
+
   if (isFunction(vite)) {
     const configFn: ConfigFn = async function (env: ConfigEnv) {
       const config: UserConfig = await vite(env);
