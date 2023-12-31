@@ -12,4 +12,5 @@ export type Options = {
   ) => MayBePromise<UserConfig>;
   logger?: boolean;
   vite?: MayBePromise<UserConfig> | ConfigFn;
+  watch?: boolean;
 };

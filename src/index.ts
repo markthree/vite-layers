@@ -9,6 +9,7 @@ import {
   loadLayer,
   normalizeLayerExtends,
 } from "./load";
+import { WatchLayer } from "./plugin";
 
 export function detectEnv(config: UserConfig) {
   return {
@@ -26,6 +27,7 @@ export async function Layers(
     extends: layerExtends = [],
     normalize,
     logger = true,
+    watch = true,
   } = options;
 
   const normalizedLayerExtends = normalizeLayerExtends(layerExtends);
@@ -55,10 +57,16 @@ export async function Layers(
     const extendedConfigs = await loadLayer(normalizedLayerExtends, env, {
       logger,
     });
+
     if (logger) {
       treeLog(normalizedLayerExtends);
     }
+
     const userConfig = defu(config, ...extendedConfigs);
+    if (watch) {
+      userConfig.plugins ??= [];
+      userConfig.plugins.push(WatchLayer(normalizedLayerExtends));
+    }
     if (isFunction(normalize)) {
       return normalize(userConfig);
     }
@@ -71,4 +79,5 @@ export * from "./load";
 export * from "./log";
 export * from "./path";
 export * from "./type";
+export * from "./plugin";
 export type { ConfigEnv, UserConfig, UserConfigFn } from "vite";
