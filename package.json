@@ -1,5 +1,5 @@
 {
-  "version": "0.5.1",
+  "version": "0.5.2",
   "name": "vite-layers",
   "description": "layers support for vite，quickly inherit your vite configuration",
   "main": "./dist/index.cjs",
